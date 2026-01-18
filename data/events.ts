@@ -26,9 +26,9 @@ export const events: ImportantEvent[] = [
   },
   {
     id: '3',
-    name: "Sealphie's Birthday",
-    month: 5,
-    day: 25,
+    name: "Enoki's Birthday",
+    month: 1,
+    day: 2,
     type: 'birthday',
     color: 'bg-blue-500',
     iconKey: 'birthday',
