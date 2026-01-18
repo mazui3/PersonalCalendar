@@ -24,7 +24,15 @@ interface AnimationBurst {
   particles: AnimationParticle[];
 }
 
-// --- Custom SVG Art Components ---
+const bgTailwindMap: Record<string, string> = {
+  'red': 'bg-red-500',
+  'orange': 'bg-orange-500',
+  'blue': 'bg-blue-500',
+  'indigo': 'bg-indigo-500',
+  'pink': 'bg-pink-500',
+  'yellow': 'bg-yellow-500',
+  'slate': 'bg-slate-700',
+};
 
 const SVGRedFlower = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -75,11 +83,15 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
   };
 
   const triggerEventAnimation = () => {
+    if (daysRemaining >= 365) return; // Allow for demoing
+
     let type: AnimationBurst['type'] | '' = '';
-    if (nextEvent.iconKey === 'new-year') type = 'fireworks';
-    else if (nextEvent.iconKey === 'valentine') type = 'roses';
-    else if (nextEvent.iconKey === 'halloween') type = 'pumpkin';
-    else if (nextEvent.type === 'birthday' || nextEvent.iconKey === 'birthday') type = 'balloons';
+    
+    // Logic based on Category + Icon
+    if (nextEvent.icon === 'new-year') type = 'fireworks';
+    else if (nextEvent.icon === 'valentine') type = 'roses';
+    else if (nextEvent.icon === 'halloween') type = 'pumpkin';
+    else if (nextEvent.category === 'birthday') type = 'balloons';
 
     if (type) {
       const burstId = Date.now() + Math.random();
@@ -99,13 +111,11 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
         const colors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'];
         colors.forEach((color, i) => {
           for (let j = 0; j < 4; j++) {
-            // First few balloons have 0 delay for immediate visual feedback
-            const isImmediate = i === 0 && j === 0;
             particles.push({
               id: `balloon-${i}-${j}`,
               left: `${Math.random() * 100}%`,
               duration: `${7 + Math.random() * 4}s`,
-              delay: isImmediate ? '0s' : `${Math.random() * 1.2}s`,
+              delay: `${Math.random() * 1.2}s`,
               sway: `${(Math.random() - 0.5) * 300}px`,
               size: `${50 + Math.random() * 30}px`,
               color,
@@ -134,7 +144,6 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
 
   return (
     <aside className="w-full md:w-96 bg-slate-900 text-white flex flex-col p-8 md:p-12 border-r border-slate-800 relative z-30">
-      
       <div className="fixed inset-0 pointer-events-none z-[200]">
         {bursts.map(burst => {
           if (burst.type === 'roses') {
@@ -217,11 +226,6 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
         })}
       </div>
 
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-slate-800 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-20"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-slate-800 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 opacity-20"></div>
-      </div>
-
       <div className="relative z-10 flex flex-col h-full">
         <header className="mb-6 text-center md:text-left">
           <div className="inline-flex items-center space-x-2 text-slate-400 mb-2 uppercase tracking-widest text-xs font-bold">
@@ -251,7 +255,7 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
           <div className="relative group cursor-pointer" onClick={toggleDialog}>
             <div className="absolute inset-0 bg-blue-500/20 blur-2xl rounded-full scale-75 group-hover:scale-100 transition-transform duration-500"></div>
             <img 
-              src="https://mazui3.github.io/blog/schedule/ddl.PNG" 
+              src="https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/DDL.png" 
               alt="Mascot" 
               className={`
                 relative w-48 h-48 md:w-56 md:h-56 object-contain drop-shadow-2xl 
@@ -259,9 +263,6 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
                 ${showDialog ? 'scale-110' : 'hover:scale-105'}
               `}
             />
-            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 text-[10px] py-1 px-2 rounded-full whitespace-nowrap border border-slate-700 pointer-events-none uppercase tracking-tighter">
-              Touch Me!
-            </div>
           </div>
 
           <div className="text-center">
@@ -271,9 +272,6 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
               </span>
               <span className="text-xl md:text-2xl font-light text-slate-400 italic">days</span>
             </div>
-            <p className="text-lg text-slate-400 font-medium mt-1">
-              left to go
-            </p>
           </div>
         </div>
 
@@ -288,10 +286,10 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
           >
             <div className="flex items-center space-x-4">
               <div className={`
-                w-10 h-10 ${nextEvent.color || 'bg-slate-600'} rounded-xl flex items-center justify-center text-lg shadow-inner text-white
+                w-10 h-10 ${bgTailwindMap[nextEvent.themeColor] || 'bg-slate-600'} rounded-xl flex items-center justify-center text-lg shadow-inner text-white
                 ${daysRemaining === 0 ? 'animate-bounce' : ''}
               `}>
-                <i className={`fas ${nextEvent.type === 'birthday' ? 'fa-cake-candles' : 'fa-calendar-star'}`}></i>
+                <i className={`fas ${nextEvent.category === 'birthday' ? 'fa-cake-candles' : 'fa-calendar-star'}`}></i>
               </div>
               <div>
                 <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Scheduled Date</p>
@@ -299,22 +297,11 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
                   <p className="text-md font-bold text-slate-100">
                     {new Date(0, nextEvent.month - 1, nextEvent.day).toLocaleString('default', { month: 'long', day: 'numeric' })}
                   </p>
-                  {daysRemaining === 0 && (
-                    <span className="text-[10px] bg-blue-500 text-white px-1.5 py-0.5 rounded font-bold animate-pulse">TODAY</span>
-                  )}
                 </div>
-              </div>
-              <div className="ml-auto opacity-0 group-hover/card:opacity-100 transition-opacity">
-                <i className="fas fa-sparkles text-blue-400 animate-pulse"></i>
               </div>
             </div>
           </div>
         </div>
-
-        <footer className="mt-12 text-slate-500 text-[10px] font-medium uppercase tracking-widest flex items-center justify-center md:justify-start space-x-2">
-          <i className="fas fa-shield-halved text-[9px]"></i>
-          <span>Personal Dashboard v1.3.1</span>
-        </footer>
       </div>
     </aside>
   );

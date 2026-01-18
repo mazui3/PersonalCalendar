@@ -7,6 +7,9 @@ import { events } from './data/events';
 import { getNextEvent } from './utils/dateHelpers';
 import { ImportantEvent } from './types';
 
+const MIN_DATE = new Date(2025, 6, 1); // July 2025
+const MAX_DATE = new Date(2027, 5, 1); // June 2027
+
 const App: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [activeEvent, setActiveEvent] = useState<ImportantEvent | null>(null);
@@ -15,16 +18,30 @@ const App: React.FC = () => {
     return getNextEvent(events);
   }, []);
 
+  const isAtMinDate = useMemo(() => {
+    return currentDate.getFullYear() === MIN_DATE.getFullYear() && currentDate.getMonth() === MIN_DATE.getMonth();
+  }, [currentDate]);
+
+  const isAtMaxDate = useMemo(() => {
+    return currentDate.getFullYear() === MAX_DATE.getFullYear() && currentDate.getMonth() === MAX_DATE.getMonth();
+  }, [currentDate]);
+
   const handlePrevMonth = () => {
+    if (isAtMinDate) return;
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
   };
 
   const handleNextMonth = () => {
+    if (isAtMaxDate) return;
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   };
 
   const handleGoToToday = () => {
-    setCurrentDate(new Date());
+    const today = new Date();
+    // Clamp to bounds if today is outside the range
+    if (today < MIN_DATE) setCurrentDate(new Date(MIN_DATE));
+    else if (today > MAX_DATE) setCurrentDate(new Date(MAX_DATE));
+    else setCurrentDate(today);
   };
 
   const openEventDetails = (event: ImportantEvent) => {
@@ -37,14 +54,6 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col md:flex-row h-screen w-full overflow-hidden bg-white">
-      {/* Sticky Note Overlay */}
-      {activeEvent && (
-        <StickyNote 
-          event={activeEvent} 
-          onClose={closeEventDetails} 
-        />
-      )}
-
       {/* Left Section: Countdown */}
       <Sidebar 
         nextEvent={nextEventData.event} 
@@ -52,10 +61,10 @@ const App: React.FC = () => {
       />
 
       {/* Right Section: Calendar */}
-      <main className="flex-1 flex flex-col p-4 md:p-8 overflow-y-auto">
-        <header className="flex items-center justify-between mb-8">
+      <main className="flex-1 flex flex-col p-4 md:p-8 lg:p-10 overflow-hidden bg-slate-50/30">
+        <header className="flex items-center justify-between mb-4 md:mb-6 shrink-0">
           <div>
-            <h2 className="text-3xl font-bold text-slate-800">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-800">
               {currentDate.toLocaleString('default', { month: 'long' })} 
               <span className="ml-2 font-light text-slate-400">{currentDate.getFullYear()}</span>
             </h2>
@@ -63,20 +72,28 @@ const App: React.FC = () => {
           <div className="flex items-center space-x-2">
             <button 
               onClick={handleGoToToday}
-              className="px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors"
+              className="px-3 py-1.5 md:px-4 md:py-2 text-sm font-semibold text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors shadow-sm active:scale-95"
             >
               Today
             </button>
-            <div className="flex bg-slate-100 rounded-lg p-1">
+            <div className="flex bg-slate-200/50 rounded-lg p-1 border border-slate-200">
               <button 
                 onClick={handlePrevMonth}
-                className="p-2 hover:bg-white rounded-md transition-all text-slate-600 shadow-sm hover:shadow-none"
+                disabled={isAtMinDate}
+                className={`p-2 rounded-md transition-all shadow-sm active:scale-95 ${
+                  isAtMinDate ? 'text-slate-300 cursor-not-allowed' : 'hover:bg-white text-slate-600'
+                }`}
+                title={isAtMinDate ? "Reached earliest allowed date" : "Previous Month"}
               >
                 <i className="fas fa-chevron-left"></i>
               </button>
               <button 
                 onClick={handleNextMonth}
-                className="p-2 hover:bg-white rounded-md transition-all text-slate-600 shadow-sm hover:shadow-none"
+                disabled={isAtMaxDate}
+                className={`p-2 rounded-md transition-all shadow-sm active:scale-95 ${
+                  isAtMaxDate ? 'text-slate-300 cursor-not-allowed' : 'hover:bg-white text-slate-600'
+                }`}
+                title={isAtMaxDate ? "Reached latest allowed date" : "Next Month"}
               >
                 <i className="fas fa-chevron-right"></i>
               </button>
@@ -84,12 +101,22 @@ const App: React.FC = () => {
           </div>
         </header>
 
-        <CalendarView 
-          currentDate={currentDate} 
-          events={events} 
-          onEventClick={openEventDetails}
-        />
+        <div className="flex-1 relative min-h-0">
+          <CalendarView 
+            currentDate={currentDate} 
+            events={events} 
+            onEventClick={openEventDetails}
+          />
+        </div>
       </main>
+
+      {/* Sticky Note */}
+      {activeEvent && (
+        <StickyNote 
+          event={activeEvent} 
+          onClose={closeEventDetails} 
+        />
+      )}
     </div>
   );
 };
