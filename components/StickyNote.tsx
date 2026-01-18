@@ -36,7 +36,7 @@ const StickyNote: React.FC<StickyNoteProps> = ({ event, onClose }) => {
       <div
         className={`
           relative w-full max-w-sm aspect-square bg-[#fff9c4] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.4)] p-8
-          rotate-[10deg] animate-note-fly-in
+          rotate-[7deg] animate-note-fly-in
           border-l-[12px] border-yellow-200/50
           pointer-events-auto
         `}

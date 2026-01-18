@@ -16,6 +16,11 @@ interface AnimationParticle {
   size?: string;
   sway?: string;
   color?: string;
+  angle?: string;
+  distanceMid?: string;
+  distanceEnd?: string;
+  distanceFinal?: string;
+  streakLen?: number;
 }
 
 interface AnimationBurst {
@@ -83,14 +88,14 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
   };
 
   const triggerEventAnimation = () => {
-    if (daysRemaining >= 365) return;
+    if (daysRemaining >= 15) return;
 
     let type: AnimationBurst['type'] | '' = '';
 
-    if (nextEvent.icon === 'new-year') type = 'fireworks';
+    if (nextEvent.icon === 'new-year' || nextEvent.icon === 'chinese-new-year' || nextEvent.category ===  'travel') type = 'fireworks';
     else if (nextEvent.icon === 'valentine') type = 'roses';
     else if (nextEvent.icon === 'halloween') type = 'pumpkin';
-    else if (nextEvent.category === 'birthday') type = 'balloons';
+    else if (nextEvent.category === 'birthday' || nextEvent.category === 'anniversary') type = 'balloons';
 
     if (type) {
       const burstId = Date.now() + Math.random();
@@ -122,12 +127,13 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
           }
         });
       } else if (type === 'fireworks') {
-        for (let i = 0; i < 8; i++) {
+        // Increased number of firework centers
+        for (let i = 0; i < 6; i++) {
           particles.push({
-            id: `fw-${i}`,
-            left: `${15 + Math.random() * 70}%`,
-            top: `${15 + Math.random() * 50}%`,
-            delay: `${i * 0.3}s`,
+            id: `fw-center-${i}`,
+            left: `${10 + Math.random() * 80}%`,
+            top: `${10 + Math.random() * 60}%`,
+            delay: `${i * 0.4}s`,
           });
         }
       }
@@ -137,7 +143,7 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
 
       setTimeout(() => {
         setBursts(prev => prev.filter(b => b.id !== burstId));
-      }, 10000);
+      }, 12000);
     }
   };
 
@@ -205,17 +211,28 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
                     className="absolute"
                     style={{ left: p.left, top: p.top }}
                   >
-                    {[...Array(16)].map((_, j) => (
-                      <div
-                        key={j}
-                        className="firework-particle"
-                        style={{
-                          backgroundColor: ['#fde047', '#f472b6', '#22d3ee', '#f87171', '#ffffff'][Math.floor(Math.random() * 5)],
-                          transform: `rotate(${j * 22.5}deg) translateY(60px)`,
-                          animationDelay: p.delay
-                        }}
-                      />
-                    ))}
+                    {/* Increased particle count to 24 for a full circular explosion */}
+                    {[...Array(24)].map((_, j) => {
+                      const angle = j * 15; // 360 / 24 = 15
+                      const distanceBase = 80 + Math.random() * 40;
+                      return (
+                        <div
+                          key={j}
+                          className="firework-particle"
+                          style={{
+                            color: ['#fde047', '#f472b6', '#22d3ee', '#fb923c', '#ffffff'][Math.floor(Math.random() * 5)],
+                            backgroundColor: 'currentColor',
+                            animationDelay: p.delay,
+                            // CSS Custom Properties for the complex streak animation
+                            '--angle': `${angle}deg`,
+                            '--distance-mid': `${distanceBase * 0.4}px`,
+                            '--distance-end': `${distanceBase * 0.9}px`,
+                            '--distance-final': `${distanceBase}px`,
+                            '--streak-len': 10 + Math.random() * 15,
+                          } as any}
+                        />
+                      );
+                    })}
                   </div>
                 ))}
               </div>

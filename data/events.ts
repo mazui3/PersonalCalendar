@@ -100,5 +100,60 @@ export const events: ImportantEvent[] = [
     icon: 'chinese-new-year',
     message: "Happy Lunar New Year! May the Year of the Dragon bring you luck and prosperity.",
     memo: "Prepare the red envelopes (Hongbao). Family reunion dinner. Buy some fresh oranges for good luck!"
+  },
+  {
+    id: '10',
+    name: "Sealphie's Birthday",
+    month: 5,
+    day: 25,
+    category: 'birthday',
+    themeColor: 'indigo',
+    icon: 'sealphie-birthday',
+    message: "Time for a big splash! Happy Birthday Sealphie!",
+    memo: "Party at the cove. Bring extra fish treats. Don't forget the giant inflatable ball!"
+  },
+  {
+    id: '11',
+    name: "Tototo's Birthday",
+    month: 9,
+    day: 3,
+    category: 'birthday',
+    themeColor: 'pink',
+    icon: 'tototo-birthday',
+    message: "Coolest birthday ever! Let's party in style.",
+    memo: "Reserve the rooftop lounge. Everyone must wear stylish sunglasses. Order the glitter cupcakes."
+  },
+  {
+    id: '12',
+    name: 'Anniversary',
+    month: 1,
+    day: 26,
+    category: 'anniversary',
+    themeColor: 'indigo',
+    icon: 'anniversary-crayons',
+    message: "Kids grow up so fast, precious the moment being with them.",
+    memo: "Hello Future Me's anniversary."
+  },
+  {
+    id: '13',
+    name: 'Anniversary',
+    month: 8,
+    day: 23,
+    category: 'anniversary',
+    themeColor: 'pink',
+    icon: 'anniversary-rose',
+    message: "Every day with you is as beautiful as a rainbow rose.",
+    memo: "The Last Two Evle's anniversary."
+  },
+  {
+    id: '14',
+    name: 'Anniversary',
+    month: 4,
+    day: 30,
+    category: 'anniversary',
+    themeColor: 'blue',
+    icon: 'anniversary-book',
+    message: "Writing the next chapter of our story together.",
+    memo: "Library's anniversary."
   }
 ];

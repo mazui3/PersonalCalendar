@@ -38,8 +38,8 @@ const CalendarView: React.FC<CalendarViewProps> = ({ currentDate, events, onEven
 
   return (
     <div className="h-full flex flex-col bg-white rounded-3xl border border-slate-200 shadow-xl relative min-h-[500px] md:min-h-0">
-      {/* Weekdays Header: Added z-10 and rounded-t to handle overlap and aesthetics */}
-      <div className="grid grid-cols-7 bg-slate-50/80 backdrop-blur-sm border-b border-slate-200 shrink-0 z-10 rounded-t-3xl">
+      {/* Weekdays Header: Lowered z-index to allow stickers to float on top */}
+      <div className="grid grid-cols-7 bg-slate-50/80 backdrop-blur-sm border-b border-slate-200 shrink-0 z-10 rounded-t-3xl relative">
         {WEEKDAYS.map(day => (
           <div key={day} className="py-3 md:py-4 text-center text-[10px] font-bold text-slate-400 tracking-widest">
             {day}
@@ -47,9 +47,9 @@ const CalendarView: React.FC<CalendarViewProps> = ({ currentDate, events, onEven
         ))}
       </div>
 
-      {/* Days Grid: Removed overflow-hidden to allow stickers to pop out */}
+      {/* Days Grid: Elevated z-index to z-20 so its children can overlap the header (z-10) */}
       <div
-        className="grid grid-cols-7 flex-1 relative bg-white min-h-0 rounded-b-3xl"
+        className="grid grid-cols-7 flex-1 relative z-20 bg-white min-h-0 rounded-b-3xl isolate"
         style={{ gridTemplateRows: `repeat(${numRows}, minmax(0, 1fr))` }}
       >
         {days.map((dayObj, index) => {
@@ -67,7 +67,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ currentDate, events, onEven
                 ${index % 7 === 6 ? 'border-r-0' : ''}
                 ${index >= days.length - 7 ? 'border-b-0' : ''}
                 flex flex-col min-h-0
-                ${event ? 'z-20 cursor-pointer hover:bg-slate-50/40 hover:z-40' : 'z-0'}
+                ${event ? 'cursor-pointer hover:bg-slate-50/40 hover:z-50' : 'hover:z-10'}
                 ${index === days.length - 7 ? 'rounded-bl-3xl' : ''}
                 ${index === days.length - 1 ? 'rounded-br-3xl' : ''}
               `}
@@ -87,10 +87,9 @@ const CalendarView: React.FC<CalendarViewProps> = ({ currentDate, events, onEven
                 )}
               </div>
 
-              {/* Event Sticker: Positioned to allow popping out of cell boundaries */}
-              {/* Sticker sizes increased by ~15% from original values */}
+              {/* Event Sticker: z-20 combined with parent's z-20 allows it to float above the weekday header */}
               {event && (
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
                   <div
                     style={{
                       transform: `rotate(${rotation}deg)`,
@@ -108,7 +107,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ currentDate, events, onEven
                     />
                   </div>
 
-                  {/* Name Tooltip: Higher z-index to stay on top of everything */}
+                  {/* Name Tooltip */}
                   <div className="absolute top-1 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-[110] scale-75 group-hover:scale-100">
                     <div className="bg-slate-900/90 text-white text-[8px] md:text-[10px] font-bold py-1 px-2 rounded-full whitespace-nowrap shadow-lg border border-white/10 relative">
                       <span className="uppercase tracking-widest">{event.name}</span>

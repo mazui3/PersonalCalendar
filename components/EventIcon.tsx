@@ -17,7 +17,12 @@ const stickerMap: Record<EventIconType, string> = {
   'halloween': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/halloween_pumpkin1.png',
   'deadline': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/shimekiri_owareru_man.png',
   'big-event': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/job_illustrator_pc_woman_tetsuya.png',
-  'chinese-new-year': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/eto_inu_shinnen_aisatsu.png'
+  'chinese-new-year': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/eto_inu_shinnen_aisatsu.png',
+  'sealphie-birthday': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/otanjoubi_birthday_present_balloon.png',
+  'tototo-birthday': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/birthday_party_sunglass.png',
+  'anniversary-crayons': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/omocha_kureyon.png',
+  'anniversary-rose': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/flower_rose_rainbow.png',
+  'anniversary-book': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/book_tate.png'
 };
 
 const hexColorMap: Record<string, string> = {
