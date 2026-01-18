@@ -53,58 +53,59 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-screen w-full overflow-hidden bg-white">
+    <div className="flex flex-col md:flex-row min-h-screen md:h-screen w-full md:overflow-hidden bg-white">
       {/* Left Section: Countdown */}
-      <Sidebar 
-        nextEvent={nextEventData.event} 
-        daysRemaining={nextEventData.days} 
+      <Sidebar
+        nextEvent={nextEventData.event}
+        daysRemaining={nextEventData.days}
       />
 
       {/* Right Section: Calendar */}
-      <main className="flex-1 flex flex-col p-4 md:p-8 lg:p-10 overflow-hidden bg-slate-50/30">
+      <main className="flex-1 flex flex-col p-4 md:p-6 lg:p-8 bg-slate-50/30 md:overflow-y-auto custom-scrollbar">
         <header className="flex items-center justify-between mb-4 md:mb-6 shrink-0">
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-800">
-              {currentDate.toLocaleString('default', { month: 'long' })} 
+            <h2 className="text-xl md:text-3xl font-bold text-slate-800">
+              {currentDate.toLocaleString('default', { month: 'long' })}
               <span className="ml-2 font-light text-slate-400">{currentDate.getFullYear()}</span>
             </h2>
           </div>
           <div className="flex items-center space-x-2">
-            <button 
+            <button
               onClick={handleGoToToday}
-              className="px-3 py-1.5 md:px-4 md:py-2 text-sm font-semibold text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors shadow-sm active:scale-95"
+              className="px-2.5 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-semibold text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors shadow-sm active:scale-95"
             >
               Today
             </button>
             <div className="flex bg-slate-200/50 rounded-lg p-1 border border-slate-200">
-              <button 
+              <button
                 onClick={handlePrevMonth}
                 disabled={isAtMinDate}
-                className={`p-2 rounded-md transition-all shadow-sm active:scale-95 ${
+                className={`p-1.5 md:p-2 rounded-md transition-all shadow-sm active:scale-95 ${
                   isAtMinDate ? 'text-slate-300 cursor-not-allowed' : 'hover:bg-white text-slate-600'
                 }`}
                 title={isAtMinDate ? "Reached earliest allowed date" : "Previous Month"}
               >
-                <i className="fas fa-chevron-left"></i>
+                <i className="fas fa-chevron-left text-xs md:text-base"></i>
               </button>
-              <button 
+              <button
                 onClick={handleNextMonth}
                 disabled={isAtMaxDate}
-                className={`p-2 rounded-md transition-all shadow-sm active:scale-95 ${
+                className={`p-1.5 md:p-2 rounded-md transition-all shadow-sm active:scale-95 ${
                   isAtMaxDate ? 'text-slate-300 cursor-not-allowed' : 'hover:bg-white text-slate-600'
                 }`}
                 title={isAtMaxDate ? "Reached latest allowed date" : "Next Month"}
               >
-                <i className="fas fa-chevron-right"></i>
+                <i className="fas fa-chevron-right text-xs md:text-base"></i>
               </button>
             </div>
           </div>
         </header>
 
-        <div className="flex-1 relative min-h-0">
-          <CalendarView 
-            currentDate={currentDate} 
-            events={events} 
+        {/* Calendar Wrapper: Constrained height to reduce stretch on large screens */}
+        <div className="flex-1 md:max-h-[82vh] lg:max-h-[85vh] w-full mx-auto">
+          <CalendarView
+            currentDate={currentDate}
+            events={events}
             onEventClick={openEventDetails}
           />
         </div>
@@ -112,9 +113,9 @@ const App: React.FC = () => {
 
       {/* Sticky Note */}
       {activeEvent && (
-        <StickyNote 
-          event={activeEvent} 
-          onClose={closeEventDetails} 
+        <StickyNote
+          event={activeEvent}
+          onClose={closeEventDetails}
         />
       )}
     </div>

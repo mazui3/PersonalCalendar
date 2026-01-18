@@ -11,12 +11,12 @@ export const getNextEvent = (events: ImportantEvent[]): NextEventResult => {
   const eventDates = events.map(event => {
     let year = today.getFullYear();
     let date = new Date(year, event.month - 1, event.day);
-    
+
     // If the event has already passed this year, look at next year
     if (date < today) {
       date = new Date(year + 1, event.month - 1, event.day);
     }
-    
+
     return { event, date };
   });
 
@@ -34,14 +34,14 @@ export const getNextEvent = (events: ImportantEvent[]): NextEventResult => {
 };
 
 /**
- * Returns an array of days for the specified month and year.
+ * Returns an array of days for the specified month and year, dynamically sized to fit the weeks.
  */
 export const getCalendarDays = (year: number, month: number) => {
   const firstDayOfMonth = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  
+
   const days = [];
-  
+
   // Previous month padding
   const prevMonthLastDay = new Date(year, month, 0).getDate();
   for (let i = firstDayOfMonth - 1; i >= 0; i--) {
@@ -51,7 +51,7 @@ export const getCalendarDays = (year: number, month: number) => {
       date: new Date(year, month - 1, prevMonthLastDay - i)
     });
   }
-  
+
   // Current month days
   for (let i = 1; i <= daysInMonth; i++) {
     days.push({
@@ -60,10 +60,12 @@ export const getCalendarDays = (year: number, month: number) => {
       date: new Date(year, month, i)
     });
   }
-  
-  // Next month padding
-  const totalSlots = 42; // 6 weeks * 7 days
-  const remainingSlots = totalSlots - days.length;
+
+  // Dynamic sizing: Calculate how many 7-day rows we actually need
+  // Instead of a fixed 42 (6 rows), we use the next multiple of 7
+  const totalSlotsNeeded = Math.ceil(days.length / 7) * 7;
+  const remainingSlots = totalSlotsNeeded - days.length;
+
   for (let i = 1; i <= remainingSlots; i++) {
     days.push({
       day: i,
@@ -71,7 +73,7 @@ export const getCalendarDays = (year: number, month: number) => {
       date: new Date(year, month + 1, i)
     });
   }
-  
+
   return days;
 };
 

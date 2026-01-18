@@ -26,9 +26,9 @@ export const events: ImportantEvent[] = [
   },
   {
     id: '3',
-    name: "Sealphie's Birthday",
-    month: 5,
-    day: 25,
+    name: "Someone's Birthday",
+    month: 1,
+    day: 2,
     category: 'birthday',
     themeColor: 'blue',
     icon: 'birthday',
@@ -61,7 +61,7 @@ export const events: ImportantEvent[] = [
     id: '6',
     name: "Summer Vacation",
     month: 7,
-    day: 15,
+    day: 4,
     category: 'travel',
     themeColor: 'yellow',
     icon: 'vacation',
@@ -71,12 +71,34 @@ export const events: ImportantEvent[] = [
   {
     id: '7',
     name: "Project Deadline",
-    month: 11,
-    day: 15,
+    month: 3,
+    day: 31,
     category: 'work',
     themeColor: 'slate',
     icon: 'deadline',
     message: "The clock is ticking! Stay focused, you're almost at the finish line.",
     memo: "Submit the final project report. Double-check all citations. Present results to the board at 10 AM."
+  },
+  {
+    id: '8',
+    name: 'Big Event',
+    month: 10,
+    day: 1,
+    category: 'event',
+    themeColor: 'blue',
+    icon: 'big-event',
+    message: "The big day is here! Time to show the world what you're made of.",
+    memo: "Final review of the presentation. Double-check the venue details. Get a good night's sleep before Oct 1st!"
+  },
+  {
+    id: '9',
+    name: 'Chinese New Year',
+    month: 2,
+    day: 17,
+    category: 'holiday',
+    themeColor: 'red',
+    icon: 'chinese-new-year',
+    message: "Happy Lunar New Year! May the Year of the Dragon bring you luck and prosperity.",
+    memo: "Prepare the red envelopes (Hongbao). Family reunion dinner. Buy some fresh oranges for good luck!"
   }
 ];

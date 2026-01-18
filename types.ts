@@ -1,6 +1,6 @@
 
-export type EventCategory = 'holiday' | 'birthday' | 'work' | 'personal' | 'travel' | 'anniversary';
-export type EventIconType = 'birthday' | 'christmas' | 'valentine' | 'vacation' | 'new-year' | 'halloween' | 'deadline';
+export type EventCategory = 'holiday' | 'birthday' | 'work' | 'personal' | 'travel' | 'anniversary' | 'event';
+export type EventIconType = 'birthday' | 'christmas' | 'valentine' | 'vacation' | 'new-year' | 'halloween' | 'deadline' | 'big-event' | 'chinese-new-year';
 
 export interface ImportantEvent {
   id: string;
@@ -10,7 +10,7 @@ export interface ImportantEvent {
   category: EventCategory;
   icon: EventIconType;
   themeColor: 'red' | 'orange' | 'blue' | 'indigo' | 'pink' | 'yellow' | 'slate';
-  message?: string; 
+  message?: string;
   memo?: string;
 }
 

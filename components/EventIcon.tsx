@@ -15,7 +15,9 @@ const stickerMap: Record<EventIconType, string> = {
   'vacation': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/travel_nidukuri.png',
   'new-year': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/hanabi_bg.png',
   'halloween': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/halloween_pumpkin1.png',
-  'deadline': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/travel_nidukuri.png'
+  'deadline': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/shimekiri_owareru_man.png',
+  'big-event': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/job_illustrator_pc_woman_tetsuya.png',
+  'chinese-new-year': 'https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/image/eto_inu_shinnen_aisatsu.png'
 };
 
 const hexColorMap: Record<string, string> = {
@@ -32,26 +34,23 @@ const EventIcon: React.FC<EventIconProps> = ({ icon, className = "w-24 h-24", co
   const src = stickerMap[icon];
   const themeHex = hexColorMap[colorName] || '#3b82f6';
 
-  // Performance Optimization: Removed the deep shadow and simplified borders.
-  // Using fewer drop-shadow layers significantly reduces the GPU load for filter calculations.
   const stickerStyle: React.CSSProperties = {
     filter: `
-      drop-shadow(2px 2px 0 white) 
+      drop-shadow(2px 2px 0 white)
       drop-shadow(-2px -2px 0 white)
-      drop-shadow(3px 0 0 ${themeHex}) 
-      drop-shadow(-3px 0 0 ${themeHex}) 
-      drop-shadow(0 3px 0 ${themeHex}) 
+      drop-shadow(3px 0 0 ${themeHex})
+      drop-shadow(-3px 0 0 ${themeHex})
+      drop-shadow(0 3px 0 ${themeHex})
       drop-shadow(0 -3px 0 ${themeHex})
     `,
-    willChange: 'filter, transform', // Keep hardware acceleration hints
+    willChange: 'filter, transform',
   };
 
   return (
     <div className={`relative flex items-center justify-center ${className} transform-gpu`}>
-      {/* Background glow removed for better performance */}
-      <img 
-        src={src} 
-        alt={icon} 
+      <img
+        src={src}
+        alt={icon}
         style={stickerStyle}
         className="w-full h-full object-contain select-none pointer-events-none"
       />

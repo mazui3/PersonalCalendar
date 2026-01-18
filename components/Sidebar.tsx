@@ -83,11 +83,10 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
   };
 
   const triggerEventAnimation = () => {
-    if (daysRemaining >= 365) return; // Allow for demoing
+    if (daysRemaining >= 365) return;
 
     let type: AnimationBurst['type'] | '' = '';
-    
-    // Logic based on Category + Icon
+
     if (nextEvent.icon === 'new-year') type = 'fireworks';
     else if (nextEvent.icon === 'valentine') type = 'roses';
     else if (nextEvent.icon === 'halloween') type = 'pumpkin';
@@ -135,7 +134,7 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
 
       const newBurst: AnimationBurst = { id: burstId, type: type as AnimationBurst['type'], particles };
       setBursts(prev => [...prev, newBurst]);
-      
+
       setTimeout(() => {
         setBursts(prev => prev.filter(b => b.id !== burstId));
       }, 10000);
@@ -143,15 +142,15 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
   };
 
   return (
-    <aside className="w-full md:w-96 bg-slate-900 text-white flex flex-col p-8 md:p-12 border-r border-slate-800 relative z-30">
+    <aside className="w-full md:w-96 bg-slate-900 text-white flex flex-col p-6 md:p-12 border-b md:border-b-0 md:border-r border-slate-800 relative z-30 shrink-0">
       <div className="fixed inset-0 pointer-events-none z-[200]">
         {bursts.map(burst => {
           if (burst.type === 'roses') {
             return (
               <div key={burst.id} className="absolute inset-0">
                 {burst.particles.map(p => (
-                  <div 
-                    key={p.id} 
+                  <div
+                    key={p.id}
                     className="animate-rose"
                     style={{
                       left: p.left,
@@ -171,8 +170,8 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
             return (
               <div key={burst.id} className="absolute inset-0">
                 {burst.particles.map(p => (
-                  <div 
-                    key={p.id} 
+                  <div
+                    key={p.id}
                     className="animate-balloon"
                     style={{
                       left: p.left,
@@ -192,7 +191,7 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
             return (
               <div key={burst.id} className="absolute inset-0 flex items-center justify-center bg-black/40">
                 <div className="animate-pumpkin flex flex-col items-center">
-                  <SVGPumpkin className="w-64 h-64 drop-shadow-[0_0_50px_rgba(249,115,22,0.5)]" />
+                  <SVGPumpkin className="w-48 h-48 md:w-64 md:h-64 drop-shadow-[0_0_50px_rgba(249,115,22,0.5)]" />
                 </div>
               </div>
             );
@@ -201,13 +200,13 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
             return (
               <div key={burst.id} className="absolute inset-0">
                 {burst.particles.map(p => (
-                  <div 
-                    key={p.id} 
+                  <div
+                    key={p.id}
                     className="absolute"
                     style={{ left: p.left, top: p.top }}
                   >
                     {[...Array(16)].map((_, j) => (
-                      <div 
+                      <div
                         key={j}
                         className="firework-particle"
                         style={{
@@ -227,74 +226,74 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
       </div>
 
       <div className="relative z-10 flex flex-col h-full">
-        <header className="mb-6 text-center md:text-left">
-          <div className="inline-flex items-center space-x-2 text-slate-400 mb-2 uppercase tracking-widest text-xs font-bold">
-            <span className="w-8 h-px bg-slate-700 hidden md:block"></span>
+        <header className="mb-4 md:mb-6 text-center md:text-left">
+          <div className="inline-flex items-center space-x-2 text-slate-400 mb-1 md:mb-2 uppercase tracking-widest text-[10px] md:text-xs font-bold">
+            <span className="w-6 md:w-8 h-px bg-slate-700 hidden md:block"></span>
             <span>Coming up...</span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-white">
+          <h1 className="text-xl md:text-4xl font-extrabold tracking-tight leading-tight text-white line-clamp-1">
             {nextEvent.name}
           </h1>
         </header>
 
-        <div className="flex-1 flex flex-col items-center justify-center space-y-6 relative">
-          <div 
+        <div className="flex-1 flex flex-col items-center justify-center space-y-4 md:space-y-6 relative">
+          <div
             className={`
-              absolute z-50 top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-4 w-72
+              absolute z-50 top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-4 w-64 md:w-72
               md:left-[65%] md:translate-x-0
               transition-all duration-500 ease-out origin-bottom
-              ${showDialog ? 'opacity-100 scale-100 translate-y-[-15%]' : 'opacity-0 scale-90 pointer-events-none translate-y-0'}
+              ${showDialog ? 'opacity-100 scale-100 translate-y-[-10%] md:translate-y-[-15%]' : 'opacity-0 scale-90 pointer-events-none translate-y-0'}
             `}
           >
-            <div className="bg-white text-slate-900 p-5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative text-sm font-medium leading-relaxed border border-slate-100 ring-4 ring-black/5">
+            <div className="bg-white text-slate-900 p-4 md:p-5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative text-xs md:text-sm font-medium leading-relaxed border border-slate-100 ring-4 ring-black/5">
               {nextEvent.message || "I'm counting down the days for you!"}
               <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white rotate-45 rounded-sm md:left-6 md:translate-x-0"></div>
             </div>
           </div>
 
           <div className="relative group cursor-pointer" onClick={toggleDialog}>
-            <div className="absolute inset-0 bg-blue-500/20 blur-2xl rounded-full scale-75 group-hover:scale-100 transition-transform duration-500"></div>
-            <img 
-              src="https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/DDL.png" 
-              alt="Mascot" 
+            <div className="absolute inset-0 bg-blue-500/10 blur-xl rounded-full scale-75 group-hover:scale-100 transition-transform duration-500"></div>
+            <img
+              src="https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/DDL.png"
+              alt="Mascot"
               className={`
-                relative w-48 h-48 md:w-56 md:h-56 object-contain drop-shadow-2xl 
-                transform transition-all duration-700 
+                relative w-32 h-32 md:w-56 md:h-56 object-contain drop-shadow-2xl
+                transform transition-all duration-700
                 ${showDialog ? 'scale-110' : 'hover:scale-105'}
               `}
             />
           </div>
 
           <div className="text-center">
-            <div className="flex items-baseline justify-center space-x-2">
-              <span className="text-7xl md:text-8xl font-black text-white tracking-tighter leading-none">
+            <div className="flex items-baseline justify-center space-x-1 md:space-x-2">
+              <span className="text-5xl md:text-8xl font-black text-white tracking-tighter leading-none">
                 {daysRemaining}
               </span>
-              <span className="text-xl md:text-2xl font-light text-slate-400 italic">days</span>
+              <span className="text-base md:text-2xl font-light text-slate-400 italic">days</span>
             </div>
           </div>
         </div>
 
-        <div className="mt-8">
-          <div 
+        <div className="mt-4 md:mt-8">
+          <div
             onClick={triggerEventAnimation}
             className={`
-              p-5 bg-slate-800/40 backdrop-blur-md rounded-2xl border border-slate-700/50 
+              p-3 md:p-5 bg-slate-800/40 backdrop-blur-md rounded-2xl border border-slate-700/50
               transition-all duration-300 group/card
-              cursor-pointer hover:bg-slate-700/60 hover:scale-[1.02] hover:border-blue-500/50
+              cursor-pointer hover:bg-slate-700/60 md:hover:scale-[1.02] hover:border-blue-500/50
             `}
           >
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3 md:space-x-4">
               <div className={`
-                w-10 h-10 ${bgTailwindMap[nextEvent.themeColor] || 'bg-slate-600'} rounded-xl flex items-center justify-center text-lg shadow-inner text-white
+                w-8 h-8 md:w-10 md:h-10 ${bgTailwindMap[nextEvent.themeColor] || 'bg-slate-600'} rounded-lg md:rounded-xl flex items-center justify-center text-sm md:text-lg shadow-inner text-white
                 ${daysRemaining === 0 ? 'animate-bounce' : ''}
               `}>
                 <i className={`fas ${nextEvent.category === 'birthday' ? 'fa-cake-candles' : 'fa-calendar-star'}`}></i>
               </div>
               <div>
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Scheduled Date</p>
+                <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Scheduled Date</p>
                 <div className="flex items-center space-x-2">
-                  <p className="text-md font-bold text-slate-100">
+                  <p className="text-sm md:text-md font-bold text-slate-100">
                     {new Date(0, nextEvent.month - 1, nextEvent.day).toLocaleString('default', { month: 'long', day: 'numeric' })}
                   </p>
                 </div>
