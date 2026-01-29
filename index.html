@@ -4,54 +4,68 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Personal Calendar</title>
+    <title>Inner Circle | Personal Calendar</title>
+    <!--
+      PRODUCTION NOTE: cdn.tailwindcss.com is used here for demonstration and prototyping.
+      For a real production environment, install Tailwind via CLI: npm install -D tailwindcss
+    -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              handwriting: ['Kalam', 'cursive'],
+            },
+            colors: {
+              personal: {
+                50: '#fefaf6',
+                100: '#fcf3eb',
+                200: '#f7e2d3',
+                300: '#f0c8ab',
+                400: '#e6a47d',
+                500: '#dd8056',
+                600: '#d0643d',
+                700: '#ad4e34',
+                800: '#8b412f',
+                900: '#71372a',
+              },
+            },
+          },
+        },
+      }
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Kalam:wght@400;700&display=swap');
-      body {
-        font-family: 'Inter', sans-serif;
-        overscroll-behavior-y: contain;
-      }
-      .font-handwriting {
-        font-family: 'Kalam', cursive;
-      }
-      .custom-scrollbar::-webkit-scrollbar {
-        width: 4px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: rgba(0,0,0,0.1);
-        border-radius: 10px;
+    <style type="text/tailwindcss">
+      @layer base {
+        body {
+          @apply bg-slate-50 text-slate-900 antialiased;
+          overscroll-behavior-y: contain;
+        }
       }
 
-      /* GPU Accelerated Animations */
-      @keyframes in {
-        from { opacity: 0; }
-        to { opacity: 1; }
+      @layer components {
+        .custom-scrollbar::-webkit-scrollbar {
+          @apply w-1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          @apply bg-transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          @apply bg-slate-200 rounded-full hover:bg-slate-300 transition-colors;
+        }
       }
+
+      /* Animations */
       @keyframes note-fly-in {
-        0% {
-          opacity: 0;
-          transform: scale(0.5) translateY(50px) rotate(-5deg);
-        }
-        100% {
-          opacity: 1;
-          transform: scale(1) translateY(0) rotate(7deg);
-        }
-      }
-
-      .animate-in {
-        animation: in 200ms ease-out both;
+        0% { opacity: 0; transform: scale(0.9) translateY(30px) rotate(-2deg); }
+        100% { opacity: 1; transform: scale(1) translateY(0) rotate(2deg); }
       }
       .animate-note-fly-in {
         animation: note-fly-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        will-change: transform, opacity;
       }
 
-      /* Optimized Particle Animations */
       @keyframes rose-fall {
         0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
         10% { opacity: 1; }
@@ -59,11 +73,8 @@
         100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
       }
       .animate-rose {
-        position: fixed;
-        top: 0;
-        will-change: transform, opacity;
+        @apply fixed top-0 pointer-events-none;
         animation: rose-fall linear both;
-        opacity: 0;
       }
 
       @keyframes balloon-rise {
@@ -72,69 +83,41 @@
         100% { transform: translateY(-120vh) translateX(var(--sway)); opacity: 0; }
       }
       .animate-balloon {
-        position: fixed;
-        top: 0;
-        will-change: transform, opacity;
+        @apply fixed top-0 pointer-events-none;
         animation: balloon-rise linear both;
-        opacity: 0;
       }
 
-      @keyframes pumpkin-pop {
-        0% { transform: scale(0); opacity: 0; }
-        20% { transform: scale(1.1); opacity: 1; }
-        80% { transform: scale(1); opacity: 1; }
-        100% { transform: scale(0.8); opacity: 0; }
-      }
-      .animate-pumpkin {
-        animation: pumpkin-pop 3s ease-out forwards;
-        will-change: transform, opacity;
-      }
-
-      /* New Advanced Firework Streak Animation */
       @keyframes firework-streak {
-        0% {
-          transform: rotate(var(--angle)) translateY(0) scale(0.1);
-          opacity: 0;
-        }
-        10% {
-          transform: rotate(var(--angle)) translateY(0) scale(1);
-          opacity: 1;
-        }
-        40% {
-          transform: rotate(var(--angle)) translateY(var(--distance-mid)) scaleY(var(--streak-len));
-          opacity: 1;
-        }
-        80% {
-          transform: rotate(var(--angle)) translateY(var(--distance-end)) scaleY(1);
-          opacity: 1;
-        }
-        100% {
-          transform: rotate(var(--angle)) translateY(var(--distance-final)) scale(0);
-          opacity: 0;
-        }
+        0% { transform: rotate(var(--angle)) translateY(0) scale(0.1); opacity: 0; }
+        10% { transform: rotate(var(--angle)) translateY(0) scale(1); opacity: 1; }
+        40% { transform: rotate(var(--angle)) translateY(var(--distance-mid)) scaleY(var(--streak-len)); opacity: 1; }
+        80% { transform: rotate(var(--angle)) translateY(var(--distance-end)) scaleY(1); opacity: 1; }
+        100% { transform: rotate(var(--angle)) translateY(var(--distance-final)) scale(0); opacity: 0; }
       }
-
       .firework-particle {
-        position: absolute;
-        width: 3px;
-        height: 3px;
-        border-radius: 999px;
+        @apply absolute w-[2px] h-[2px] rounded-full;
         transform-origin: center bottom;
         animation: firework-streak 1s cubic-bezier(0.165, 0.84, 0.44, 1) both;
-        will-change: transform, opacity;
+      }
+
+      .washi-tape {
+        @apply absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 bg-personal-200/60 backdrop-blur-sm rotate-1 shadow-sm opacity-80;
+        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3"
-  }
-}
-</script>
-</head>
-  <body class="bg-slate-50 text-slate-900">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+    <script type="importmap">
+    {
+      "imports": {
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+        "react/": "https://esm.sh/react@^19.2.3/",
+        "react": "https://esm.sh/react@^19.2.3"
+      }
+    }
+    </script>
+  </head>
+  <body>
     <div id="root"></div>
   </body>
 </html>
