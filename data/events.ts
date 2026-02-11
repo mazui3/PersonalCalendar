@@ -10,8 +10,8 @@ export const events: ImportantEvent[] = [
     category: 'holiday',
     themeColor: 'red',
     icon: 'christmas',
-    message: "Ho ho ho! I've already prepared the stockings. I hope you've been good this year!",
-    memo: "Don't forget to buy the turkey! Also, check if the lights from last year still work. Pick up gifts for the family by Dec 20th."
+    message: "Am I being a good enough kid so that Santa will give me more gifts?",
+    memo: "Prepare gifts. Black Friday is around the corner too, remember to buy ahead of time."
   },
   {
     id: '2',
@@ -21,8 +21,8 @@ export const events: ImportantEvent[] = [
     category: 'holiday',
     themeColor: 'orange',
     icon: 'halloween',
-    message: "Boo! Did I scare you? Get those pumpkins ready, it's almost spooky time!",
-    memo: "Costume idea: Mad Scientist. Buy 5kg of candy for the neighborhood kids. Carve pumpkins on the 30th."
+    message: "Boo! Did I scare you? Once someone said my exitences is already scary by definition. I am the best for spooky time.",
+    memo: "Find the coolest Halloween party in town. Costume, idea TBD."
   },
   {
     id: '3',
@@ -32,8 +32,8 @@ export const events: ImportantEvent[] = [
     category: 'birthday',
     themeColor: 'blue',
     icon: 'birthday',
-    message: "Yay! It's almost time for cake and celebration. Don't forget the party hats!",
-    memo: "Order the blue velvet cake. Reserve the aquarium for the party. Invite the whole pod!"
+    message: "I heard the birthday person prefer strawberry cream cake. Old and classic, I am a fan of that too.",
+    memo: "Make a wish."
   },
   {
     id: '4',
@@ -43,8 +43,8 @@ export const events: ImportantEvent[] = [
     category: 'holiday',
     themeColor: 'indigo',
     icon: 'new-year',
-    message: "A fresh start is just around the corner. What's your resolution going to be?",
-    memo: "Resolution: Read 12 books. Plan the countdown party. Buy sparkling cider."
+    message: "Congrats on survive another year. Hooray! What's your resolution going to be?",
+    memo: "Routine: Year-end summary. Reflect it with the bucket list. Plan a something cool if possible."
   },
   {
     id: '5',
@@ -54,8 +54,8 @@ export const events: ImportantEvent[] = [
     category: 'holiday',
     themeColor: 'pink',
     icon: 'valentine',
-    message: "Do you know the flower language for a yellow rose is friendship and good luck? Do not mistake the colour of your bouquet!",
-    memo: "Book the Italian restaurant by Feb 1st. Get the special box of chocolates from the local artisan shop."
+    message: "Do you know the flower language for a yellow rose is friendship and good luck? Do not mistake the colour of your bouquet.",
+    memo: "How do you create precious memory?"
   },
   {
     id: '6',
@@ -65,8 +65,8 @@ export const events: ImportantEvent[] = [
     category: 'travel',
     themeColor: 'yellow',
     icon: 'vacation',
-    message: "Sun, sand, and sea! Don't forget the sunscreen. You've earned this break!",
-    memo: "Renew passport. Pack the oversized sunglasses. Turn on the out-of-office email responder!"
+    message: "Sun, sand, and sea! Don't forget the sunscreen. You've earned this break! ...Once a year.",
+    memo: "Renew passport. Pack the oversized sunglasses. Turn on the out-of-office email responder."
   },
   {
     id: '7',
@@ -76,8 +76,8 @@ export const events: ImportantEvent[] = [
     category: 'work',
     themeColor: 'slate',
     icon: 'deadline',
-    message: "The clock is ticking! Stay focused, you're almost at the finish line.",
-    memo: "Submit the final project report. Double-check all citations. Present results to the board at 10 AM."
+    message: "The clock is ticking. Plan ahead, you're almost at the finish line.",
+    memo: "Stay focus on 10 hours weekly study."
   },
   {
     id: '8',
@@ -88,7 +88,7 @@ export const events: ImportantEvent[] = [
     themeColor: 'blue',
     icon: 'big-event',
     message: "The big day is here! Time to show the world what you're made of.",
-    memo: "Final review of the presentation. Double-check the venue details. Get a good night's sleep before Oct 1st!"
+    memo: "Plan one month before the deadline. Another one month for refining project details. Another more for everything. Finally, double-check the luggage."
   },
   {
     id: '9',
@@ -98,8 +98,8 @@ export const events: ImportantEvent[] = [
     category: 'holiday',
     themeColor: 'red',
     icon: 'chinese-new-year',
-    message: "Happy Lunar New Year! May the Year of the Dragon bring you luck and prosperity.",
-    memo: "Prepare the red envelopes (Hongbao). Family reunion dinner. Buy some fresh oranges for good luck!"
+    message: "Xin Nian Hao. May the Year of the Horse bring you luck and prosperity.",
+    memo: "Prepare the red envelopes (Hongbao). Bring good clothes for family trip and reunion dinner."
   },
   {
     id: '10',
@@ -109,8 +109,8 @@ export const events: ImportantEvent[] = [
     category: 'birthday',
     themeColor: 'indigo',
     icon: 'sealphie-birthday',
-    message: "Time for a big splash! Happy Birthday Sealphie!",
-    memo: "Party at the cove. Bring extra fish treats. Don't forget the giant inflatable ball!"
+    message: "Happy Birthday Sealphie~ Do we have a group photo already?",
+    memo: "May you be happy and healthy."
   },
   {
     id: '11',
@@ -120,8 +120,8 @@ export const events: ImportantEvent[] = [
     category: 'birthday',
     themeColor: 'pink',
     icon: 'tototo-birthday',
-    message: "Coolest birthday ever! Let's party in style.",
-    memo: "Reserve the rooftop lounge. Everyone must wear stylish sunglasses. Order the glitter cupcakes."
+    message: "Where's my birthday glasses? I love the colourful candles on top of it.",
+    memo: "It's a fortune I share this time with you for another year."
   },
   {
     id: '12',
@@ -142,7 +142,7 @@ export const events: ImportantEvent[] = [
     category: 'anniversary',
     themeColor: 'pink',
     icon: 'anniversary-rose',
-    message: "Every day with you is as beautiful as a rainbow rose.",
+    message: "When I was a kiddo, I was stuck on the idea that my birth date and my death date had to be the same. As I got older, I found that birth and death aren’t that important. They’re too far away from me. I only have today, and I’m happy with that.",
     memo: "The Last Two Evle's anniversary."
   },
   {
@@ -153,7 +153,7 @@ export const events: ImportantEvent[] = [
     category: 'anniversary',
     themeColor: 'blue',
     icon: 'anniversary-book',
-    message: "Writing the next chapter of our story together.",
+    message: "Did you know the first library may date back to 7 B.C.? It’s amazing that some concepts are so universal.",
     memo: "Library's anniversary."
   }
 ];
