@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { ImportantEvent } from '../types';
 
@@ -88,10 +87,10 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
   };
 
   const triggerEventAnimation = () => {
-    if (daysRemaining >= 15) return;
+    if (daysRemaining >= 15) return; 
 
     let type: AnimationBurst['type'] | '' = '';
-
+    
     if (nextEvent.icon === 'new-year' || nextEvent.icon === 'chinese-new-year' || nextEvent.category ===  'travel') type = 'fireworks';
     else if (nextEvent.icon === 'valentine') type = 'roses';
     else if (nextEvent.icon === 'halloween') type = 'pumpkin';
@@ -140,7 +139,7 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
 
       const newBurst: AnimationBurst = { id: burstId, type: type as AnimationBurst['type'], particles };
       setBursts(prev => [...prev, newBurst]);
-
+      
       setTimeout(() => {
         setBursts(prev => prev.filter(b => b.id !== burstId));
       }, 12000);
@@ -155,8 +154,8 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
             return (
               <div key={burst.id} className="absolute inset-0">
                 {burst.particles.map(p => (
-                  <div
-                    key={p.id}
+                  <div 
+                    key={p.id} 
                     className="animate-rose"
                     style={{
                       left: p.left,
@@ -176,8 +175,8 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
             return (
               <div key={burst.id} className="absolute inset-0">
                 {burst.particles.map(p => (
-                  <div
-                    key={p.id}
+                  <div 
+                    key={p.id} 
                     className="animate-balloon"
                     style={{
                       left: p.left,
@@ -206,8 +205,8 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
             return (
               <div key={burst.id} className="absolute inset-0">
                 {burst.particles.map(p => (
-                  <div
-                    key={p.id}
+                  <div 
+                    key={p.id} 
                     className="absolute"
                     style={{ left: p.left, top: p.top }}
                   >
@@ -216,7 +215,7 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
                       const angle = j * 15; // 360 / 24 = 15
                       const distanceBase = 80 + Math.random() * 40;
                       return (
-                        <div
+                        <div 
                           key={j}
                           className="firework-particle"
                           style={{
@@ -254,7 +253,7 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center space-y-4 md:space-y-6 relative">
-          <div
+          <div 
             className={`
               absolute z-50 top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-4 w-64 md:w-72
               md:left-[65%] md:translate-x-0
@@ -270,12 +269,12 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
 
           <div className="relative group cursor-pointer" onClick={toggleDialog}>
             <div className="absolute inset-0 bg-blue-500/10 blur-xl rounded-full scale-75 group-hover:scale-100 transition-transform duration-500"></div>
-            <img
-              src="https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/DDL.png"
-              alt="Mascot"
+            <img 
+              src="https://raw.githubusercontent.com/mazui3/PersonalCalendar/refs/heads/main/DDL.png" 
+              alt="Mascot" 
               className={`
-                relative w-32 h-32 md:w-56 md:h-56 object-contain drop-shadow-2xl
-                transform transition-all duration-700
+                relative w-32 h-32 md:w-56 md:h-56 object-contain drop-shadow-2xl 
+                transform transition-all duration-700 
                 ${showDialog ? 'scale-110' : 'hover:scale-105'}
               `}
             />
@@ -292,10 +291,10 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
         </div>
 
         <div className="mt-4 md:mt-8">
-          <div
+          <div 
             onClick={triggerEventAnimation}
             className={`
-              p-3 md:p-5 bg-slate-800/40 backdrop-blur-md rounded-2xl border border-slate-700/50
+              p-3 md:p-5 bg-slate-800/40 backdrop-blur-md rounded-2xl border border-slate-700/50 
               transition-all duration-300 group/card
               cursor-pointer hover:bg-slate-700/60 md:hover:scale-[1.02] hover:border-blue-500/50
             `}
@@ -305,7 +304,15 @@ const Sidebar: React.FC<SidebarProps> = ({ nextEvent, daysRemaining }) => {
                 w-8 h-8 md:w-10 md:h-10 ${bgTailwindMap[nextEvent.themeColor] || 'bg-slate-600'} rounded-lg md:rounded-xl flex items-center justify-center text-sm md:text-lg shadow-inner text-white
                 ${daysRemaining === 0 ? 'animate-bounce' : ''}
               `}>
-                <i className={`fas ${nextEvent.category === 'birthday' ? 'fa-cake-candles' : 'fa-calendar-star'}`}></i>
+                {nextEvent.category === 'birthday' ? (
+                  <svg className="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 21h16"/><path d="M7 21v-2"/><path d="M12 21v-2"/><path d="M17 21v-2"/><path d="M7 11V7"/><path d="M12 11V7"/><path d="M17 11V7"/><path d="M7 4h.01"/><path d="M12 4h.01"/><path d="M17 4h.01"/>
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m12 13 1.2 2.4 2.8.4-2 2 1 2.8-3-1.6-3 1.6 1-2.8-2-2 2.8-.4Z"/>
+                  </svg>
+                )}
               </div>
               <div>
                 <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Scheduled Date</p>

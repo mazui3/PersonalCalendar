@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ImportantEvent } from '../types';
 
@@ -29,13 +28,13 @@ const borderTailwindMap: Record<string, string> = {
 
 const StickyNote: React.FC<StickyNoteProps> = ({ event, onClose }) => {
   return (
-    <div
+    <div 
       className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300"
       onClick={onClose}
     >
-      <div
+      <div 
         className={`
-          relative w-full max-w-sm aspect-square bg-personal-50 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.5)] p-8
+          relative w-full max-w-sm aspect-square bg-personal-50 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.5)] p-8 
           rotate-[2deg] animate-note-fly-in
           border-l-[12px] border-personal-200/40
           pointer-events-auto rounded-sm
@@ -47,15 +46,17 @@ const StickyNote: React.FC<StickyNoteProps> = ({ event, onClose }) => {
       >
         {/* Washi Tape Aesthetic */}
         <div className="washi-tape"></div>
-
+        
         <div className={`absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 ${bgTailwindMap[event.themeColor]} rounded-full shadow-md z-10 border-4 ${borderTailwindMap[event.themeColor]}`}></div>
-
-        <button
+        
+        <button 
           onClick={onClose}
-          className="absolute top-4 right-4 text-slate-300 hover:text-slate-600 transition-colors p-2 rounded-full hover:bg-personal-100"
+          className="absolute top-4 right-4 text-slate-300 hover:text-slate-600 transition-colors p-2 rounded-full hover:bg-personal-100 flex items-center justify-center"
           aria-label="Close memo"
         >
-          <i className="fas fa-times text-xl"></i>
+          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+          </svg>
         </button>
 
         <div className="h-full flex flex-col pointer-events-none">
@@ -63,7 +64,7 @@ const StickyNote: React.FC<StickyNoteProps> = ({ event, onClose }) => {
             <span className={`w-3 h-3 rounded-full ${bgTailwindMap[event.themeColor]}`}></span>
             <h3 className="text-xl font-bold text-slate-800 uppercase tracking-tight">{event.name}</h3>
           </div>
-
+          
           <div className="flex-1 text-slate-600 text-xl font-medium leading-relaxed overflow-y-auto pr-2 custom-scrollbar font-handwriting pointer-events-auto">
             {event.memo || "No special plans recorded yet. Let's make this day unforgettable!"}
           </div>
